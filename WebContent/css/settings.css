@@ -1,0 +1,28 @@
+@CHARSET "ISO-8859-1";
+
+li {
+	font-family:Raleway;
+}
+
+#selectUsers {
+	background-color: black;
+	width:100%;
+}
+
+.removeCollaborator {
+	float: right;
+}
+
+.boxCollaborator {
+	height:130px !important;
+	padding:7px !important;
+}
+
+.imgCollaborator {
+	width: 75px !important;
+	margin : 10%;
+}
+/*
+#pending{
+	margin-top: 18%
+}*/

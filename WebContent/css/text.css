@@ -1,0 +1,75 @@
+@charset "ISO-8859-1";
+
+.names{
+	font-family: Raleway; 
+	font-size: 20px;
+	margin-top: -4px;
+	margin-left: -5px;
+	max-width: 130px;
+	overflow: hidden;
+	color: white
+}
+
+.icon_folder{
+	padding-top: 10px;
+}
+
+.btn bg-red{
+	margin-Bottom : 2%;
+	margin-Right : 2%;
+}
+
+h2{
+	margin-left: 20px;
+}
+
+#titles {
+	display : flow-root;
+}
+
+#lock {
+	float: right;
+    margin-top: 2%;
+    font-size: 19px;
+}
+
+#close{
+	border: none;
+  	text-align: center;
+  	transition: 0.3s;
+  	display: inline-block;
+  	text-decoration: none;
+  	cursor: pointer;
+	margin-left: 20px;
+	margin-bottom: 10px;
+	padding: 8px 12px;
+	float:right
+}
+
+#close:hover {
+	opacity: 10;
+	box-shadow: 0px 2px 0 1px rgba(0,0,0,0.24), 0px 0px 0px 0px rgba(0,0,0,0.19);
+}
+
+#options{
+	margin-left: 20px;
+	margin-bottom: 10px;
+	padding: 5px 10px;
+}
+
+.dropdown-menu{
+	margin-left:120px
+}
+
+#contenuto{
+	display: none;
+	float: left; 
+	width: 45%; 
+	margin-left: 2%; 
+	margin-top: 21px;
+}
+
+.CodeMirror {
+	border: 1px solid #eee;
+	height: 600px;
+}

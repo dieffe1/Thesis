@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="theme-color" content="#f0efef">
+<title>InstanText | Log in</title>
+
+<!-- Tell the browser to be responsive to screen width -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+<!-- Google API & AuthenticationID -->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="203419167287-v6omsdlt4t5d6ekv23ubgg776kcvfrss.apps.googleusercontent.com">
+<link rel="shortcut icon" href="../index/img/icon.png" />
+<link rel="stylesheet" href="../bootstrap/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../bootstrap/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../bootstrap/Ionicons/css/ionicons.min.css">
+<link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+<link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<link href="../css/swal.css" rel="stylesheet">
+<link href="../css/googlebutton.css" rel="stylesheet">
+
+</head>
+
+<body onload="checkEnter();">
+	<script src="../javascript/loginController.js"></script>
+	
+	<header class="hold-transition login-page background-image">
+		<div class="login-box">
+			<div class="login-logo">
+				<a href="page?action=index"><img src="../index/img/logo.png" height="170" width="195"></img></a>
+			</div>
+			<div class="login-box-body">
+				<p class="login-box-msg">Sign in to start your session</p>
+					<div class="form-group has-feedback">
+						<input id="username" class="form-control" placeholder="Username" name="username" required>
+						<span class="glyphicon glyphicon-user form-control-feedback"></span>
+					</div>
+					<div class="form-group has-feedback">
+						<input id="password" type="password" class="form-control" placeholder="Password" name="password" required>
+						<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+					</div>
+					<div class="row" id="buttons">
+						<div class="col-xs-12" id="signin">
+							<button id="button" class="btn btn-block bg-olive" onclick="login();">Sign In</button>
+						</div>
+	
+						<div class="col-xs-12 social-auth-links text-center">
+							<div id="google" class="g-signin2" data-onsuccess="onSignIn"></div>
+							<br><a href="page?action=registration" >Register a new membership</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<script src="../bootstrap/jquery/dist/jquery.min.js"></script>
+			<script src="../bootstrap/bootstrap/dist/js/bootstrap.min.js"></script>
+			<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	</header>
+</body>
+</html>

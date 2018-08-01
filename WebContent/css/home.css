@@ -1,0 +1,42 @@
+@charset "ISO-8859-1";
+
+.names{
+	font-family: Raleway; 
+	font-size: 20px;
+	margin-top: -4px;
+	margin-left: -5px;
+	max-width: 130px;
+	overflow: hidden;
+	color: white
+}
+
+#options{
+	float: right;
+	margin-right: 20%;
+}
+
+#name{
+	max-width: 100%;
+	overflow: hidden;
+}
+
+.icon_folder{
+	padding-top: 10px;
+}
+
+#gsc-iw-id1 {
+	height : 30px;
+}
+
+input.gsc-search-button {
+	height : 30px;
+	width : 72px;
+}
+
+textarea {
+	font-family : Raleway;
+}
+
+input#gsc-i-id1.gsc-input {
+	font-family : Raleway;
+}

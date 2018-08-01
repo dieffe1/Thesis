@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>InstanText</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	
+	<servlet>
+		<servlet-name>AddFileServlet</servlet-name>
+		<servlet-class>controller.AddFile</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddFileServlet</servlet-name>
+		<url-pattern>/html/addFile</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>TakeBranchServlet</servlet-name>
+		<servlet-class>controller.TakeBranch</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TakeBranchServlet</servlet-name>
+		<url-pattern>/html/takeBranch</url-pattern>
+	</servlet-mapping>	
+	
+	
+	<servlet>
+		<servlet-name>CreateBranchServlet</servlet-name>
+		<servlet-class>controller.CreateBranch</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateBranchServlet</servlet-name>
+		<url-pattern>/html/createBranch</url-pattern>
+	</servlet-mapping>	
+	
+	
+	<servlet>
+		<servlet-name>MergeBranchServlet</servlet-name>
+		<servlet-class>controller.Merge</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MergeBranchServlet</servlet-name>
+		<url-pattern>/html/mergeBranch</url-pattern>
+	</servlet-mapping>	
+	
+	
+	<servlet>
+		<servlet-name>UpdateFileServlet</servlet-name>
+		<servlet-class>controller.UpdateFile</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateFileServlet</servlet-name>
+		<url-pattern>/html/updateFile</url-pattern>
+	</servlet-mapping>	
+	
+	
+	<servlet>
+		<servlet-name>AddPackageServlet</servlet-name>
+		<servlet-class>controller.AddPackage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddPackageServlet</servlet-name>
+		<url-pattern>/html/addPackage</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>ChangePageServlet</servlet-name>
+		<servlet-class>controller.ChangePage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChangePageServlet</servlet-name>
+		<url-pattern>/html/page</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>ChatServlet</servlet-name>
+		<servlet-class>controller.Chat</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChatServlet</servlet-name>
+		<url-pattern>/html/load</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>CheckLoginServlet</servlet-name>
+		<servlet-class>controller.CheckLogin</servlet-class>
+	</servlet>
+		<servlet-mapping>
+		<servlet-name>CheckLoginServlet</servlet-name>
+		<url-pattern>/html/checkLogin</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>CompilerServlet</servlet-name>
+		<servlet-class>controller.Compile</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CompilerServlet</servlet-name>
+		<url-pattern>/html/compile</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>CreateCheckpointServlet</servlet-name>
+		<servlet-class>controller.CreateCheckpoint</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateCheckpointServlet</servlet-name>
+		<url-pattern>/html/createCheckpoint</url-pattern>
+	</servlet-mapping>
+		
+
+	<servlet>
+		<servlet-name>CreateCheckpointFileServlet</servlet-name>
+		<servlet-class>controller.CreateCheckpointFile</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateCheckpointFileServlet</servlet-name>
+		<url-pattern>/html/createCheckfile</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>CreateProjectServlet</servlet-name>
+		<servlet-class>controller.CreateProject</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateProjectServlet</servlet-name>
+		<url-pattern>/html/createProject</url-pattern>
+	</servlet-mapping>
+
+	
+	<servlet>
+		<servlet-name>ExecuteServlet</servlet-name>
+		<servlet-class>controller.Execute</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ExecuteServlet</servlet-name>
+		<url-pattern>/html/execute</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>FindStringServlet</servlet-name>
+		<servlet-class>controller.FindString</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FindStringServlet</servlet-name>
+		<url-pattern>/html/findString</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>FindUsersServlet</servlet-name>
+		<servlet-class>controller.FindUsers</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FindUsersServlet</servlet-name>
+		<url-pattern>/html/findUsers</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>controller.Login</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/html/login</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>LoginAPIServlet</servlet-name>
+		<servlet-class>controller.LoginAPI</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginAPIServlet</servlet-name>
+		<url-pattern>/html/loginAPI</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>controller.Logout</servlet-class>
+	</servlet>
+		<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/html/logout</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>ManageCollaborationRequestServlet</servlet-name>
+		<servlet-class>controller.ManageCollaborationRequest</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ManageCollaborationRequestServlet</servlet-name>
+		<url-pattern>/html/manageCollaborationRequest</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>MessageServlet</servlet-name>
+		<servlet-class>controller.OldMessage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MessageServlet</servlet-name>
+		<url-pattern>/html/loadOld</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>OpenFileServlet</servlet-name>
+		<servlet-class>controller.OpenFile</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OpenFileServlet</servlet-name>
+		<url-pattern>/html/openFile</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>OpenPackageServlet</servlet-name>
+		<servlet-class>controller.OpenPackage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OpenPackageServlet</servlet-name>
+		<url-pattern>/html/openPackage</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>OpenProjectServlet</servlet-name>
+		<servlet-class>controller.OpenProject</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OpenProjectServlet</servlet-name>
+		<url-pattern>/html/openProject</url-pattern> 
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>ReadTextServlet</servlet-name>
+		<servlet-class>controller.ReadText</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReadTextServlet</servlet-name>
+		<url-pattern>/html/readText</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>RegistrationServlet</servlet-name>
+		<servlet-class>controller.Register</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RegistrationServlet</servlet-name>
+		<url-pattern>/html/register</url-pattern>
+	</servlet-mapping>
+
+	
+	<servlet>
+		<servlet-name>RemoveCollaboratorServlet</servlet-name>
+		<servlet-class>controller.RemoveCollaborator</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RemoveCollaboratorServlet</servlet-name>
+		<url-pattern>/html/removeCollaborator</url-pattern>
+	</servlet-mapping>
+	
+
+	<servlet>
+		<servlet-name>RemoveFileServlet</servlet-name>
+		<servlet-class>controller.RemoveFile</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RemoveFileServlet</servlet-name>
+		<url-pattern>/html/removeFile</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>RemovePackageServlet</servlet-name>
+		<servlet-class>controller.RemovePackage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RemovePackageServlet</servlet-name>
+		<url-pattern>/html/removePackage</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>RemoveProjectServlet</servlet-name>
+		<servlet-class>controller.RemoveProject</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RemoveProjectServlet</servlet-name>
+		<url-pattern>/html/removeProject</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>RenameFileServlet</servlet-name>
+		<servlet-class>controller.RenameFile</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RenameFileServlet</servlet-name>
+		<url-pattern>/html/renameFile</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>RenamePackageServlet</servlet-name>
+		<servlet-class>controller.RenamePackage</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RenamePackageServlet</servlet-name>
+		<url-pattern>/html/renamePackage</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>RenameProjectServlet</servlet-name>
+		<servlet-class>controller.RenameProject</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RenameProjectServlet</servlet-name>
+		<url-pattern>/html/renameProject</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>RestoreCheckpointServlet</servlet-name>
+		<servlet-class>controller.RestoreCheckpoint</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RestoreCheckpointServlet</servlet-name>
+		<url-pattern>/html/restoreCheckpoint</url-pattern>
+	</servlet-mapping>
+	
+
+	<servlet>
+		<servlet-name>RestoreCheckpointFileServlet</servlet-name>
+		<servlet-class>controller.RestoreCheckpointFile</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RestoreCheckpointFileServlet</servlet-name>
+		<url-pattern>/html/restoreCheckfile</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>SaveTextServlet</servlet-name>
+		<servlet-class>controller.SaveText</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SaveTextServlet</servlet-name>
+		<url-pattern>/html/saveText</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>SendCollaborationRequestServlet</servlet-name>
+		<servlet-class>controller.SendCollaborationRequest</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SendCollaborationRequestServlet</servlet-name>
+		<url-pattern>/html/sendCollaborationRequest</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>SettingsServlet</servlet-name>
+		<servlet-class>controller.Settings</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SettingsServlet</servlet-name>
+		<url-pattern>/html/settings</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>ShowCollaboratorServlet</servlet-name>
+		<servlet-class>controller.ShowCollaborator</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ShowCollaboratorServlet</servlet-name>
+		<url-pattern>/html/showCollaborator</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>UpdateUserServlet</servlet-name>
+		<servlet-class>controller.UpdateUserCredential</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateUserServlet</servlet-name>
+		<url-pattern>/html/updateCredential</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>UploadProjectServlet</servlet-name>
+		<servlet-class>controller.UploadProject</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UploadProjectServlet</servlet-name>
+		<url-pattern>/html/upload</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

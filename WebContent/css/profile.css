@@ -1,0 +1,8 @@
+.boxProfile {
+	width: 40%; 
+	height: -webkit-fill-available;
+}
+
+#primaryBox {
+	width : 100%;
+}

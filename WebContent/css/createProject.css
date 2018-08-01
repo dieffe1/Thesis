@@ -1,0 +1,18 @@
+@CHARSET "ISO-8859-1";
+
+#inputFile {
+	font-family : Raleway;
+}
+
+#projectButton {
+	margin-bottom : 4px;
+}
+
+#icon {
+	padding-top : 10px;
+}
+
+#nameFolder {
+	font-family: Raleway; 
+	font-size: 22px;
+}

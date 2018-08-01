@@ -1,0 +1,23 @@
+@charset "UTF-8";
+		
+#progress_bar {
+	margin: 10px 0;
+	padding: 3px;
+	border: 1px solid #000;
+	font-size: 14px;
+	clear: both;
+	opacity: 0;
+	-moz-transition: opacity 2s linear;
+	-o-transition: opacity 2s linear;
+	-webkit-transition: opacity 0.5s linear;
+}
+
+#progress_bar.loading {
+	opacity: 1.0;
+}
+
+#progress_bar .percent {
+	background-color: #dd4b39;
+	height: auto;
+	width: 0;
+}
