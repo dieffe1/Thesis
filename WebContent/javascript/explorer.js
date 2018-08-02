@@ -40,6 +40,7 @@ function firstCheck(size1, size2) {
 	location.hash = $('#user').html();
 	$('#chat_drop').hide();
 	$('#option_drop').hide();
+	$('#projectsTreeButton').hide();
 	window.setInterval(load, 5000, $('#user').html());
 };
 
@@ -296,6 +297,7 @@ function showContent(name, isCreator){
 	$('#'+name).removeAttr("onclick");
 	$('#chat_drop').show();
 	$('#option_drop').show();
+	$('#projectsTreeButton').show();
 	location.hash += "/" + name;
 	$.ajax({
 		url : 'page',
@@ -307,7 +309,7 @@ function showContent(name, isCreator){
 		success : function(response){
 
 			var hash = location.hash.split("/");
-			if(hash.length == 2){
+			if(hash.length == 2){ // project content
 				var section = $("<section></section>").addClass("content");
 
 				var returnButton = $("<button></button>").addClass("btn btn-danger");
@@ -364,9 +366,14 @@ function showContent(name, isCreator){
 				h3.append(spanName);
 				section.append(h3);
 
+				$('#sidebarProjName').text(name);
+				
 				var newDiv = $("<div></div>").addClass("text-center");
 				newDiv.attr("id", "contentDiv");
+				
+				
 				$.each(JSON.parse(response), function(idx, obj) {
+					// Explorer
 					var buttonFolder = $("<button></button>").addClass("btn btn-warning");
 					buttonFolder.attr("onclick", "showContent(\"" + obj.name + "\" ," + isCreator + ");");
 					buttonFolder.attr("id", obj.name);
@@ -381,6 +388,10 @@ function showContent(name, isCreator){
 					spanFolderBG.append(iconFolder);
 					buttonFolder.append(spanFolderBG);
 					newDiv.append(buttonFolder);
+					
+					// Tree Sidebar
+					createTreeSidebar(location.hash, obj.name);
+					
 				});
 				section.append(newDiv);
 				$('#explorer').html(section);
@@ -388,7 +399,7 @@ function showContent(name, isCreator){
 				var user = $('#user').html();
 				load(user);
 			}
-			else if (hash.length == 3){
+			else if (hash.length == 3){ // package content
 				if(isCreator == false) {
 					var a2 = $("<a></a>").attr("id", "rename");
 						a2.text("Rename project");
@@ -427,7 +438,7 @@ function showContent(name, isCreator){
 					$('#contentDiv').append(buttonFolder);
 				});
 			}
-			else if (hash.length == 4){
+			else if (hash.length == 4){ // file content
 				document.location.href = "page?action=openFile&mode="+response;
 			}
 		}
@@ -445,3 +456,43 @@ function back(isCreator){
 		location.hash += "/"+hash[i];
 	showContent(hash[hash.length-2], isCreator);
 }
+
+function createTreeSidebar(hash, packName) { console.log("inside " + packName + " " + hash)
+	var packList = $('<li></li>').addClass("treeview");
+	var iconPack = $('<i></i>').addClass("fa fa-circle-o");
+	var packA = $('<a></a>');
+	packA.append(iconPack);
+	packA.append(packName);
+	var spanPack = $('<span></span>').addClass("pull-right-container");
+	var iconAngle = $('<i></i>').addClass("fa fa-angle-left pull-right");
+	spanPack.append(iconAngle);
+	packA.append(spanPack);
+	packList.append(packA);
+	
+	var packUl = $('<ul></ul>').addClass("treeview-menu");
+
+	$.ajax({
+		url : 'page',
+		data : {
+			action : "open",
+			hash: hash+"/"+packName
+		},
+		type: 'GET',
+		success : function(response){
+			$.each(JSON.parse(response), function(idx, obj) {
+				var fileList = $('<li></li>').addClass("treeview");
+				var iconFile = $('<i></i>').addClass("fa fa-circle");
+				var fileA = $('<a></a>');
+				fileA.append(iconFile);
+				fileA.append(obj.name);
+				fileA.attr("onclick", "showContent(\"" + obj.name + "\" , false);"); // il parametro isCreator quando viene invocato showContent su un file è irrilevante
+				fileList.append(fileA);
+				packUl.append(fileList);
+			});
+		}
+	});
+
+	packList.append(packUl);
+	$('#sidebarPackagesZone').append(packList);
+}
+

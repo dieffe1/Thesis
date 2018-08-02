@@ -29,17 +29,22 @@
 <link href="../css/sidebars.css" rel="stylesheet">
 <link rel="shortcut icon" href="../index/img/icon.png" />
 </head>
-<body>
+<body class="skin-red-light sidebar-collapse">
 
 	<header class="main-header"> <a href="page?action=homepage"
 		class="logo" id="logo_nav" data-toggle="tooltip" title="Homepage">
 		<span class="logo-mini">I<b>T</b></span> <span class="logo-lg">Instan<b>Text</b></span>
 	</a> <nav class="navbar navbar-static-top" id="navbar">
+	
+	<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button" id="projectsTreeButton">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+	
 	<div class="navbar-custom-menu">
 		<ul class="nav navbar-nav" id="navbar_menu">
 
 
-			<!-- Notifications: style can be found in dropdown.less -->
+			
 			<li class="dropdown notifications-menu"><a href="#"
 				class="dropdown-toggle" data-toggle="dropdown" id="option_drop">
 					<i class="fa fa-gears"></i> Options	</a>
@@ -97,6 +102,56 @@
 		</ul>
 	</div>
 	</nav> </header>
+	
+	
+	
+	
+	
+	<aside class="main-sidebar" id="projectsTree">
+	
+	<section class="sidebar" style="height: auto;">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="../dist/img/user1-128x128.jpg" class="img-circle imageURL" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>${user.getUsername()}</p>
+         
+        </div>
+      </div>
+      <!-- search form -->
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+          <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu tree" data-widget="tree">
+       <li class="header">THIS PROJECT</li>
+			<li class="treeview">
+		          <a href="">
+		            <i class="fa fa-folder"></i> <span id="sidebarProjName"></span>
+		            <span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+		          </a>
+		          
+		          <ul class="treeview-menu" id="sidebarPackagesZone">
+		           
+		          </ul>
+        </li>
+        </ul>
+        </section>
+	</aside>
+	
+	
 
 	<script src="../bootstrap/jquery/dist/jquery.min.js"></script>
 	<script src="../bootstrap/bootstrap/dist/js/bootstrap.min.js"></script>

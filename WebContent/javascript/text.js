@@ -76,12 +76,42 @@ $(document).ready(function() {
 });
 
 window.onload = function() {
-	$('#a_drop').show();
+	$('#chat_drop').show();
+	$('#option_drop').show();
+	$('#projectsTreeButton').show();
+	initTreeSidebar();
 	var user = $('#user').html();
 	load(user);
 	window.setInterval(load, 5000, $('#user').html());
 	
 }
+
+
+function initTreeSidebar(){ 
+	var user = $('#user').html();
+	var projectName = $('#projectID').html();
+
+	var address = "#" + user + "/" + projectName;
+	$.ajax({
+		url : 'page',
+		data : {
+			action : "open",
+			hash: address
+		},
+		type: 'GET',
+		success : function(response){
+			$('#sidebarProjName').text(projectName);
+			
+			$.each(JSON.parse(response), function(idx, obj) {
+				createTreeSidebar(address, obj.name);
+			});
+		}
+	});
+
+	
+}
+
+
 function createCheckfile() {
 	$.ajax({
 		url: 'createCheckfile',

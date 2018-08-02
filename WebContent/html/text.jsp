@@ -17,6 +17,7 @@
 	<div class="box box-danger center" id="mainarea">
 		<section class="content">
 		<div id="titles">
+			<h4 style="float:right" id="projectID">${project.getName()}</h4>
 			<h2>${file.getName()}
 					<span id="lock">${file.getUser().getUsername()} is editing
 						this file!</span>
@@ -73,6 +74,7 @@
 	<script src="../plugins/codemirror/addon/edit/closebrackets.js"></script>
 	<script src="../plugins/codemirror/mode/css.js"></script>
 	<script src="../javascript/text.js"></script>
+	<script src="../javascript/explorer.js"></script>
 </body>
 
 </html>

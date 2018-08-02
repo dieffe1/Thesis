@@ -79,9 +79,9 @@ function load(user) {
 				
 				var hash = location.hash.split("/");
 			
-				if($('#a_drop').attr("aria-expanded")!=="true" && (lastTmp > last) && (hash.length > 1)) {
+				if($('#chat_drop').attr("aria-expanded")!=="true" && (lastTmp > last) && (hash.length > 1)) {
 					last = lastTmp;
-					$("#a_drop").notify(
+					$("#chat_drop").notify(
 					 "New Messages!", { 
 						 position:"left" }
 					);
