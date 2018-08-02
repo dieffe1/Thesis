@@ -29,7 +29,7 @@ import persistence.dao.PackageDao;
 public class Compile extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException { System.out.println("########### Compiler");
 		HttpSession session = req.getSession();
 		Project project = (Project) session.getAttribute("project");
 
@@ -81,13 +81,12 @@ public class Compile extends HttpServlet {
 		String path = src.getAbsolutePath() + pathSeparator;
 		System.out.println("QUI");
 		
-		File file;
-		try {
-			file = fileDao.findString(project.getId(), "public static void main(").get(0);			
-		} catch (IndexOutOfBoundsException e) {
-			resp.getWriter().print("Main class not found!");
-			return;
+		List<File> list = fileDao.findString(project.getId(), "public static void main(");
+		if(list.isEmpty()) {
+			resp.getWriter().println("main");
+			return; 
 		}
+		File file = list.get(0);
 		
 		String compile = "javac -sourcepath " + src.getAbsolutePath() + " -d " + bin.getAbsolutePath() + " " + path + file.getPackage().getName() + pathSeparator + file.getName() + ".java";
 		Process process = runtime.exec(compile); 

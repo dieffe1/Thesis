@@ -11,10 +11,12 @@ function InitGoogleCustomSearchEngine(){
 function compile(){
 	$.ajax({
 		url : 'compile',
-		success : function(response){
+		success : function(response){alert(response);
 			if(response == "ok")
 				swal("Compiled", "Successful compilation!", "success");
-			else {	
+			else if(response == "main") {
+				swal("Error!", "Main class not found!", "error");
+			} else {	
 				var div = document.createElement("div");
 				var area = document.createElement("textarea");
 				area.style.width = "100%";
