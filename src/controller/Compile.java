@@ -51,18 +51,18 @@ public class Compile extends HttpServlet {
 		java.io.File src = new java.io.File(srcProject, "src");
 		src.mkdir();
 
-//		System.out.println("src path: " + src.getAbsolutePath());
+		System.out.println("src path: " + src.getAbsolutePath());
 
 		java.io.File bin = new java.io.File(srcProject, "bin");
 		bin.mkdir();
 
-//		System.out.println("bin path: " + bin.getAbsolutePath());
+		System.out.println("bin path: " + bin.getAbsolutePath());
 
 		for (Package pack : packages.values()) {
 			String srcPackage = src.getAbsolutePath() + pathSeparator + pack.getName();
 			java.io.File dir = new java.io.File(srcPackage);
 			dir.mkdir();
-//			System.out.println(dir.getAbsolutePath());
+			System.out.println("pack " + dir.getAbsolutePath());
 
 			HashMap<Long, File> files = fileDao.find(pack.getId());
 			for (File file : files.values()) {
@@ -79,9 +79,15 @@ public class Compile extends HttpServlet {
 		}
 
 		String path = src.getAbsolutePath() + pathSeparator;
+		System.out.println("QUI");
 		
-		File file = fileDao.findString(project.getId(), "public static void main(").get(0);
-		 
+		File file;
+		try {
+			file = fileDao.findString(project.getId(), "public static void main(").get(0);			
+		} catch (IndexOutOfBoundsException e) {
+			resp.getWriter().print("Main class not found!");
+			return;
+		}
 		
 		String compile = "javac -sourcepath " + src.getAbsolutePath() + " -d " + bin.getAbsolutePath() + " " + path + file.getPackage().getName() + pathSeparator + file.getName() + ".java";
 		Process process = runtime.exec(compile); 
@@ -90,19 +96,16 @@ public class Compile extends HttpServlet {
 		List<String> errors = new LinkedList<>();
 		String error = "";
 
-		while ((error = stdError.readLine()) != null)
-		{
+		while ((error = stdError.readLine()) != null) {
 			errors.add(error);
 		}
 		
-		if(errors.isEmpty())
-		{
+		if(errors.isEmpty()) {
 			resp.getWriter().print("ok");
 			return;
 		}
 		
-		for(int i = 0; i<errors.size()-1; i++)
-		{
+		for(int i = 0; i<errors.size()-1; i++) { System.out.println("i" + i + errors);
 			String[] split = errors.get(i).split(Pattern.quote(pathSeparator));
 			if(split.length > 2)
 				errors.set(i, split[split.length-2] + pathSeparator + split[split.length-1]);

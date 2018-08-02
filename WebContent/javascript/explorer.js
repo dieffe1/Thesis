@@ -38,7 +38,8 @@ function firstCheck(size1, size2) {
 		
 	}
 	location.hash = $('#user').html();
-	$('#a_drop').hide();
+	$('#chat_drop').hide();
+	$('#option_drop').hide();
 	window.setInterval(load, 5000, $('#user').html());
 };
 
@@ -293,7 +294,8 @@ function showBranch(name,isCreator) {
 
 function showContent(name, isCreator){
 	$('#'+name).removeAttr("onclick");
-	$('#a_drop').show();
+	$('#chat_drop').show();
+	$('#option_drop').show();
 	location.hash += "/" + name;
 	$.ajax({
 		url : 'page',
@@ -308,9 +310,6 @@ function showContent(name, isCreator){
 			if(hash.length == 2){
 				var section = $("<section></section>").addClass("content");
 
-				var div = $("<div></div>").addClass("input-group-btn");
-				div.attr("id","options");
-
 				var returnButton = $("<button></button>").addClass("btn btn-danger");
 				returnButton.attr("onclick", "back("+isCreator+");");
 				returnButton.attr("id","returnButton");
@@ -319,59 +318,43 @@ function showContent(name, isCreator){
 				returnButton.append(icon);
 
 				section.append(returnButton);
-
-				var dropdownButton = $("<button></button>").addClass("btn btn-sm btn-success dropdown-toggle");
-				dropdownButton.attr("data-toggle", "dropdown");
-				dropdownButton.text("Options");
-
-				var spanDrop = $("<span></span>").addClass("fa fa-caret-down");
-
-				dropdownButton.append(spanDrop);
-				div.append(dropdownButton);
-
-				var list = $("<ul></ul>").addClass("dropdown-menu");
-				list.attr("id","lista")
+				
 				var a1 = $("<a></a>").attr("id", "add");
-
 				a1.text("Add Package");
 				a1.attr("onclick", "addPackage('"+ hash[1] +"');");
-
-				list.append($("<li></li>").append(a1));
+				$("#lista_opzioni").append($("<li></li>").append(a1));
 				
 				if(isCreator){
 					var a2 = $("<a></a>").attr("id", "rename");
 					a2.text("Rename project");
 					a2.attr("onclick", "renameProject();");
-					list.append($("<li></li>").append(a2));
+					$("#lista_opzioni").append($("<li></li>").append(a2));
 
 					var a3 = $("<a></a>").attr("id", "delete");
 					a3.text("Delete project");
 					a3.attr("onclick", "removeProject();");
-					list.append($("<li></li>").append(a3));
+					$("#lista_opzioni").append($("<li></li>").append(a3));
 				}
 
 				var a4 = $("<a></a>").text("Settings");
 				a4.attr("href", "page?action=settings");
-				list.append($("<li></li>").append(a4));
+				$("#lista_opzioni").append($("<li></li>").append(a4));
 
 				var a5 = $("<a></a>").text("Compile");
 				a5.attr("onclick", "compile();");
-				list.append($("<li></li>").append(a5));
+				$("#lista_opzioni").append($("<li></li>").append(a5));
 
 				var a6 = $("<a></a>").text("Execute");
 				a6.attr("onclick", "execute();");
-				list.append($("<li></li>").append(a6));
+				$("#lista_opzioni").append($("<li></li>").append(a6));
 
 				var a7 = $("<a></a>").text("Create new branch");
 				a7.attr("onclick", "createBranch();");
-				list.append($("<li></li>").append(a7));
+				$("#lista_opzioni").append($("<li></li>").append(a7));
 
 				var a8 = $("<a></a>").text("Merge with master");
 				a8.attr("onclick", "merge();");
-				list.append($("<li></li>").append(a8));
-
-				div.append(list);
-				section.append(div);
+				$("#lista_opzioni").append($("<li></li>").append(a8));
 
 				var h3 = $("<h3></h3>").addClass("site-heading text-center");
 				var spanName = $("<span></span>").addClass("site-heading-lower");
@@ -409,11 +392,11 @@ function showContent(name, isCreator){
 				if(isCreator == false) {
 					var a2 = $("<a></a>").attr("id", "rename");
 						a2.text("Rename project");
-					$('#lista').append($("<li></li>").append(a2));
+						$("#lista_opzioni").append($("<li></li>").append(a2));
 	
 					var a3 = $("<a></a>").attr("id", "delete");
 						a3.text("Delete project");
-					$('#lista').append($("<li></li>").append(a3));
+						$("#lista_opzioni").append($("<li></li>").append(a3));
 				}
 				
 				$('#add').text("Add File");

@@ -3,6 +3,14 @@ $(document).ready(function() {
 	var sp = document.location.href.split("&");
 	if(sp[1] != undefined)
 		var mode = sp[1].split("\=")[1];
+	
+	var a1 = $("<a></a>").text("Compile");
+	a1.attr("onclick", "compile();");
+	$("#lista_opzioni").append($("<li></li>").append(a1));
+
+	var a2 = $("<a></a>").text("Execute");
+	a2.attr("onclick", "execute();");
+	$("#lista_opzioni").append($("<li></li>").append(a2));
 
 	editor = CodeMirror.fromTextArea($('#fileCode')[0], {
 		tabSize : 4,
@@ -343,7 +351,7 @@ function removeFile() {
 				})
 			}
 			else if(response == "no") {
-				swal("Error", "Impossible to remove file, file in edit!","error");
+				swal("Error", "Impossible to remove file, edit in progress!","error");
 			}
 		},
 		type : 'POST'

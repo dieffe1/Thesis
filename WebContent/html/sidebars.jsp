@@ -32,15 +32,25 @@
 <body>
 
 	<header class="main-header"> <a href="page?action=homepage"
-		class="logo" id="logo_nav" data-toggle="tooltip" title="Homepage"> <span class="logo-mini">I<b>T</b></span>
-		<span class="logo-lg">Instan<b>Text</b></span>
+		class="logo" id="logo_nav" data-toggle="tooltip" title="Homepage">
+		<span class="logo-mini">I<b>T</b></span> <span class="logo-lg">Instan<b>Text</b></span>
 	</a> <nav class="navbar navbar-static-top" id="navbar">
 	<div class="navbar-custom-menu">
 		<ul class="nav navbar-nav" id="navbar_menu">
+
+
+			<!-- Notifications: style can be found in dropdown.less -->
+			<li class="dropdown notifications-menu"><a href="#"
+				class="dropdown-toggle" data-toggle="dropdown" id="option_drop">
+					<i class="fa fa-gears"></i> Options	</a>
+				<ul class="dropdown-menu" id="lista_opzioni">
+				</ul>
+			</li>
+
+
 			<li class="dropdown messages-menu"><a href="#"
-				class="dropdown-toggle" data-toggle="dropdown" id="a_drop"> <i
-					class="fa fa-envelope-o"></i> <span class="label label-success"></span>
-			</a>
+				class="dropdown-toggle" data-toggle="dropdown" id="chat_drop">
+					<i class="fa fa-envelope-o"></i> Chat </a>
 				<ul class="dropdown-menu">
 					<li>
 						<div class="box box-danger direct-chat direct-chat-danger">
@@ -59,6 +69,8 @@
 						</div>
 					</li>
 				</ul>
+			</li>
+				
 			<li class="dropdown user user-menu"><a href="#"
 				class="dropdown-toggle" data-toggle="dropdown"> <img
 					src="../dist/img/user1-128x128.jpg" class="user-image imageURL"
