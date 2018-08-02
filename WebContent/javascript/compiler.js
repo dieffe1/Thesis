@@ -11,10 +11,10 @@ function InitGoogleCustomSearchEngine(){
 function compile(){
 	$.ajax({
 		url : 'compile',
-		success : function(response){alert(response);
+		success : function(response){
 			if(response == "ok")
 				swal("Compiled", "Successful compilation!", "success");
-			else if(response == "main") {
+			else if(response.includes("Main class not found!")) { 
 				swal("Error!", "Main class not found!", "error");
 			} else {	
 				var div = document.createElement("div");

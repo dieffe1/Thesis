@@ -79,11 +79,10 @@ public class Compile extends HttpServlet {
 		}
 
 		String path = src.getAbsolutePath() + pathSeparator;
-		System.out.println("QUI");
 		
 		List<File> list = fileDao.findString(project.getId(), "public static void main(");
 		if(list.isEmpty()) {
-			resp.getWriter().println("main");
+			resp.getWriter().println("Main class not found!");
 			return; 
 		}
 		File file = list.get(0);
