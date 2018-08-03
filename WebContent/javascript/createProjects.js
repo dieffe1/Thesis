@@ -1,6 +1,3 @@
-var reader;
-var formdata = null;
-
 function createProject(type) {
 	
 	var name = null;
@@ -36,14 +33,14 @@ function createProject(type) {
 		})
 }
 
+var formdata = null;
+
 function readMultipleFiles(evt) {
 	var files = evt.target.files;
 	formdata = new FormData();
 	if (files) {
 		for (var i=0, f; f=files[i]; i++) {
-			var r = new FileReader();
 			formdata.append("files", f, f.name);
-			r.readAsText(f);
 			console.log(f.webkitRelativePath);
 		}
 	} else {
@@ -61,7 +58,7 @@ function upload(name) {
 		xhttp.onreadystatechange = function() {
 			if(xhttp.readyState == 4 && xhttp.status == 200){
 				if(xhttp.response == "error"){
-					swal("Error!", "You can upload only .txt or .java files!", "error");
+					swal("Error!", "You can upload only source files!", "error");
 				} else {
 					tryAgain(xhttp.response, name);
 				}

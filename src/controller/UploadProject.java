@@ -56,10 +56,12 @@ public class UploadProject extends HttpServlet {
 		
 		packageDao.save(pack);
 
-		List<Part> fileParts = req.getParts().stream().filter(part -> "files".equals(part.getName()))
-				.collect(Collectors.toList());
+//		List<Part> fileParts = req.getParts().stream()/*.filter(part -> "files".equals(part.getName()))*/
+//				.collect(Collectors.toList());
+		List<Part> fileParts = req.getParts().stream().collect(Collectors.toList());
 		
-		for (Part filePart : fileParts) { 
+		for (Part filePart : fileParts) {
+			System.out.println(Paths.get(filePart.getSubmittedFileName())); 
 			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 			String name = fileName.split("\\.")[0];
 			InputStream fileContent = filePart.getInputStream();
