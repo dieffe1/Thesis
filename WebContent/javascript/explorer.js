@@ -471,11 +471,13 @@ function createTreeSidebar(hash, packName) { console.log("inside " + packName + 
 	
 	var packUl = $('<ul></ul>').addClass("treeview-menu");
 
+	var newhash = hash+"/"+packName;
+	
 	$.ajax({
 		url : 'page',
 		data : {
 			action : "open",
-			hash: hash+"/"+packName
+			hash: newhash
 		},
 		type: 'GET',
 		success : function(response){
@@ -485,7 +487,9 @@ function createTreeSidebar(hash, packName) { console.log("inside " + packName + 
 				var fileA = $('<a></a>');
 				fileA.append(iconFile);
 				fileA.append(obj.name);
-				fileA.attr("onclick", "showContent(\"" + obj.name + "\" , false);"); // il parametro isCreator quando viene invocato showContent su un file è irrilevante
+				fileA.attr("id", obj.name);
+				fileA.attr("onclick", "location.hash = \"" + newhash + "\"; " +
+							"showContent(\"" + obj.name + "\" , false);"); // il parametro isCreator quando viene invocato showContent su un file è irrilevante
 				fileList.append(fileA);
 				packUl.append(fileList);
 			});
