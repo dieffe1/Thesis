@@ -40,7 +40,7 @@ function readMultipleFiles(evt) {
 	formdata = new FormData();
 	if (files) {
 		for (var i=0, f; f=files[i]; i++) {
-			formdata.append("files", f, f.name);
+			formdata.append("files", f, f.webkitRelativePath);
 			console.log(f.webkitRelativePath);
 		}
 	} else {
@@ -80,7 +80,7 @@ function uploadRequest(){
 		content: "input",
 		}).then((value) => {
 			name = value;
-			if (name != null) {
+			if (name != null && name != "") {
 				swal({
 					button: "Upload",
 					title: "Select a folder",
@@ -89,6 +89,17 @@ function uploadRequest(){
 				}).then((value1) => {
 					if(value1){
 						upload(name);
+					}
+				});
+			} else if (name === "") {
+				swal({
+					button: "Upload",
+					title: "Select a folder",
+					content: inputFile,	
+					
+				}).then((value1) => {
+					if(value1){
+						upload("uploaded");
 					}
 				});
 			}

@@ -3,6 +3,9 @@ package controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -47,33 +50,36 @@ public class UploadProject extends HttpServlet {
 		CheckpointDao checkpointDao = DAOFactory.getInstance().getCheckpointDao();
 		Checkpoint_FileDao checkpointFileDao = DAOFactory.getInstance().getCheckpointFileDao();
 
-		Package pack = new Package("_default", project);
-
 		projectDao.save(project);
 		
 		Checkpoint checkpoint = new Checkpoint("Initial Checkpoint", project, user);
 		checkpointDao.save(checkpoint);
 		
-		packageDao.save(pack);
-
-//		List<Part> fileParts = req.getParts().stream()/*.filter(part -> "files".equals(part.getName()))*/
-//				.collect(Collectors.toList());
 		List<Part> fileParts = req.getParts().stream().collect(Collectors.toList());
 		
+		HashSet<String> setPackName = new HashSet<>();
 		for (Part filePart : fileParts) {
-			System.out.println(Paths.get(filePart.getSubmittedFileName())); 
+			String[] path = Paths.get(filePart.getSubmittedFileName()).getParent().toString().split("/");
+			String packName = path[path.length-1];
+			setPackName.add(packName);
+		}
+		
+		HashMap<String, Package> mapPack = new HashMap<>();
+		setPackName.forEach(name -> mapPack.put(name, new Package(name, project)));
+		mapPack.forEach((key,value) -> packageDao.save(value));
+		
+		for (Part filePart : fileParts) {
+			
+			String[] path = Paths.get(filePart.getSubmittedFileName()).getParent().toString().split("/");
+			String packName = path[path.length-1];
+			
+			Package pack = mapPack.get(packName);
+			
 			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 			String name = fileName.split("\\.")[0];
 			InputStream fileContent = filePart.getInputStream();
 			Scanner s = new Scanner(fileContent, "UTF-8").useDelimiter("\\A");
 			String code = s.hasNext() ? s.next().toString() : "";
-			String[] split = code.split("package.*;");
-
-			if(split.length > 1)
-				code = split[0] + "\npackage _default;\n" + split[1];
-			else code = "\npackage _default;\n" + code;
-			
-//			System.out.println(fileName + "\n" + result);
 			
 			try {
 				File file = new File(name, pack, code);
@@ -92,4 +98,5 @@ public class UploadProject extends HttpServlet {
 		session.setAttribute("user", user);
 		session.setAttribute("project", project);
 	}
+	
 }
