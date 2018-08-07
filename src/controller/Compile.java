@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,10 +31,16 @@ import persistence.dao.PackageDao;
 public class Compile extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException { System.out.println("########### Compiler");
-		HttpSession session = req.getSession();
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException { 
+		System.out.println("########### Compiler");
+		HttpSession session = req.getSession();	 
 		Project project = (Project) session.getAttribute("project");
-
+		
+//		Enumeration<String> a = session.getAttributeNames();
+//		while(a.hasMoreElements()) {
+//			System.out.println(a.nextElement());
+//		}
+		
 		Runtime runtime = Runtime.getRuntime();
 		String pathSeparator = java.io.File.separator;
 		

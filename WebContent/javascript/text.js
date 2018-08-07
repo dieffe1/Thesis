@@ -1,3 +1,10 @@
+
+
+var readIntervalID;
+var saveIntervalID;
+var checkErrorsIntervalID;
+var loadChatIntervalID;
+
 $(document).ready(function() { 
 	
 	var sp = document.location.href.split("&");
@@ -13,14 +20,18 @@ $(document).ready(function() {
 	$("#lista_opzioni").append($("<li></li>").append(a2));
 
 	editor = CodeMirror.fromTextArea($('#fileCode')[0], {
+		mode : "text/x-java",
 		tabSize : 4,
+		indentWithTabs: true,
 		lineNumbers : true,
 		matchBrackets : true,
-		mode : "text/x-java",
+		autoCloseBrackets: true,
+		autofocus: true,
+		scrollbarStyle: "overlay",
 		extraKeys : {
 			"Ctrl-Space" : "autocomplete"
 		},
-		autoCloseBrackets: true,
+		
 	});
 	
 	if(mode == "read")
@@ -35,13 +46,29 @@ $(document).ready(function() {
 		readOnly: 'nocursor'
 	});
 
+	readAndSaveCode(editor);
+	checkErrorsIntervalID = window.setInterval(checkErrors, 5000);
+});
+
+window.onload = function() {
+	$('#chat_drop').show();
+	$('#option_drop').show();
+	$('#projectsTreeButton').show();
+	initTreeSidebar();
+	var user = $('#user').html();
+	load(user);
+	loadChatIntervalID = window.setInterval(load, 5000, $('#user').html());
+	
+}
+
+function readAndSaveCode(editor) {
 	$.ajax({
 		url : 'readText',
 		success: function(response){
 			var string = response.substring(0,4);
 			if(string == "lock"){
 				editor.setOption("readOnly", true);
-				window.setInterval(function(){
+				readIntervalID = window.setInterval(function(){
 					$.ajax({
 						url : 'readText',
 						success: function(responseText){
@@ -59,7 +86,7 @@ $(document).ready(function() {
 
 			}
 			else {
-				window.setInterval(function(){
+				saveIntervalID = window.setInterval(function(){
 					$.ajax({
 						url : 'saveText',
 						data : {
@@ -72,20 +99,7 @@ $(document).ready(function() {
 		},
 		type : 'GET'
 	});
-	
-});
-
-window.onload = function() {
-	$('#chat_drop').show();
-	$('#option_drop').show();
-	$('#projectsTreeButton').show();
-	initTreeSidebar();
-	var user = $('#user').html();
-	load(user);
-	window.setInterval(load, 5000, $('#user').html());
-	
 }
-
 
 function initTreeSidebar(){ 
 	var user = $('#user').html();
@@ -110,7 +124,6 @@ function initTreeSidebar(){
 
 	
 }
-
 
 function createCheckfile() {
 	$.ajax({
@@ -362,6 +375,7 @@ function ripristina() {
 	});
 
 }
+
 function nascondi() {
 	$('#mainarea').removeAttr("style", null);
 	$('#contenuto').hide();
@@ -418,3 +432,69 @@ function renameFile() {
 		}
 	})
 }
+
+function showErr(line) {
+	
+	console.log("Found at: " + line)
+	
+	var currentLine = line-1;
+	
+	$(".CodeMirror-code").children()[currentLine].setAttribute("id", "line"+currentLine);
+	
+	$("#line" + currentLine + " pre span").attr("id", "showError"+currentLine);
+	
+	$("#showError" + currentLine).notify( "Error!", {
+		position: "right"
+	});
+}
+
+function checkErrors() { 
+	console.log("CheckErrors");
+	$.ajax({
+		url : 'compile',
+		success : function(response){
+			if(response.includes("error")) {	
+				var text = "";
+				$.each(JSON.parse(response), function(idx, obj) {
+					text = text + obj + "\n";
+				});
+				
+				var split = text.split("^");
+				var numErrors = split[split.length-1].match(/.*(\d+).*/)[1];
+				
+				console.log("Found " + numErrors + " errors");
+				$(".notifyjs-wrapper").remove();
+				
+				for(var i=0; i<numErrors; i++){
+					var regex = /.*\/(\w+)\.java:(\d+).*/;
+					var matches = split[i].match(regex);
+					var fileName = matches[1];
+					var lineNumber = matches[2];
+
+					if(fileName == $("#fileName").text())
+						showErr(lineNumber);
+				}
+				
+			}
+		},
+		error : function(){
+			console.log("compilation error");
+		},
+		type : 'GET'
+	})
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

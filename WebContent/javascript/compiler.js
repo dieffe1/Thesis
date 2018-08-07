@@ -20,7 +20,7 @@ function compile(){
 				var div = document.createElement("div");
 				var area = document.createElement("textarea");
 				area.style.width = "100%";
-				area.style.fontSize = "12px";
+				area.style.fontSize = "14px";
 				area.rows = 10;
 				area.disabled = true;
 				area.value = "";

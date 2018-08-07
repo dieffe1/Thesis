@@ -9,6 +9,11 @@
 <title>InstanText | Editor</title>
 <link rel="stylesheet"
 	href="../plugins/codemirror/addon/hint/show-hint.css">
+<link rel="stylesheet"
+	href="../plugins/codemirror/addon/dialog/dialog.css">
+<link rel="stylesheet"
+	href="../plugins/codemirror/addon/scroll/simplescrollbars.css">
+
 <link rel="stylesheet" type="text/css"
 	href="../plugins/codemirror/lib/codemirror.css">
 <link rel="stylesheet" type="text/css" href="../css/text.css">
@@ -17,11 +22,11 @@
 	<div class="box box-danger center" id="mainarea">
 		<section class="content">
 		<div id="titles">
-			<h4 style="float:right" id="projectID">${project.getName()}</h4>
-			<h2>${file.getName()}
-					<span id="lock">${file.getUser().getUsername()} is editing
-						this file!</span>
-			</h2>
+			<h5 style="float: right" id="projectID">${project.getName()}</h5>
+			<h5 style="float: right">Project:</h5>
+			<h2 id="fileName">${file.getName()}</h2>
+			<h2 id="lock">${file.getUser().getUsername()} is editing this
+				file!</h2>
 		</div>
 		<div class="input-group-btn">
 			<button id="close" class="btn btn-danger" onclick="closeFile();"
@@ -72,9 +77,21 @@
 	<script src="../plugins/codemirror/addon/hint/css-hint.js"></script>
 	<script src="../plugins/codemirror/addon/hint/show-hint.js"></script>
 	<script src="../plugins/codemirror/addon/edit/closebrackets.js"></script>
+	<script src="../plugins/codemirror/addon/edit/matchbrackets.js"></script>
+	<script src="../plugins/codemirror/addon/search/search.js"></script>
+	<script src="../plugins/codemirror/addon/search/searchcursor.js"></script>
+	<script src="../plugins/codemirror/addon/search/jump-to-line.js"></script>
+	<script src="../plugins/codemirror/addon/dialog/dialog.js"></script>
+	<script src="../plugins/codemirror/addon/scroll/simplescrollbars.js"></script>
 	<script src="../plugins/codemirror/mode/css.js"></script>
 	<script src="../javascript/text.js"></script>
 	<script src="../javascript/explorer.js"></script>
+
+
+
+	<script src="../dist/js/notify.js"></script>
+	<script src="../dist/js/notify.min.js"></script>
+
 </body>
 
 </html>

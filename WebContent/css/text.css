@@ -28,7 +28,7 @@ h2{
 }
 
 #lock {
-	float: right;
+	color: red;
     margin-top: 2%;
     font-size: 19px;
 }
