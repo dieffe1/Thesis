@@ -1,5 +1,3 @@
-
-
 var readIntervalID;
 var saveIntervalID;
 var checkErrorsIntervalID;
@@ -47,7 +45,7 @@ $(document).ready(function() {
 	});
 
 	readAndSaveCode(editor);
-	checkErrorsIntervalID = window.setInterval(checkErrors, 5000);
+	checkErrorsIntervalID = window.setInterval(checkErrors, 5000, editor);
 });
 
 window.onload = function() {
@@ -99,30 +97,6 @@ function readAndSaveCode(editor) {
 		},
 		type : 'GET'
 	});
-}
-
-function initTreeSidebar(){ 
-	var user = $('#user').html();
-	var projectName = $('#projectID').html();
-
-	var address = "#" + user + "/" + projectName;
-	$.ajax({
-		url : 'page',
-		data : {
-			action : "open",
-			hash: address
-		},
-		type: 'GET',
-		success : function(response){
-			$('#sidebarProjName').text(projectName);
-			
-			$.each(JSON.parse(response), function(idx, obj) {
-				createTreeSidebar(address, obj.name);
-			});
-		}
-	});
-
-	
 }
 
 function createCheckfile() {
@@ -271,7 +245,7 @@ function findString() {
 									$('#ripristina').hide();
 								})
 								swal("Found!", "Searched string: " + name, "success",{
-//									title: "String: " + name,
+// title: "String: " + name,
 									content: div,
 								});
 							}
@@ -433,7 +407,50 @@ function renameFile() {
 	})
 }
 
-function showErr(line) {
+var previousCode = "";
+
+function checkErrors(editor) { 
+	if(previousCode !== editor.getValue()) {
+		console.log("CheckErrors");		
+		previousCode = editor.getValue();
+		$.ajax({
+			url : 'compile',
+			success : function(response){
+				if(response.includes("error")) {	
+					var text = "";
+					$.each(JSON.parse(response), function(idx, obj) {
+						text = text + obj + "\n";
+					});
+					
+					var split = text.split("^");
+					var numErrors = split[split.length-1].match(/.*(\d+).*/)[1];
+					
+					console.log("Found " + numErrors + " errors");
+					$(".notifyjs-wrapper").remove();
+					
+					for(var i=0; i<numErrors; i++){
+						var regex = /.*\/(\w+)\.java:(\d+).*/;
+						var matches = split[i].match(regex);
+						var fileName = matches[1];
+						var lineNumber = matches[2];
+						
+						regex = /.*\s\error:\s(.*)/;
+						var errorText = split[i].match(regex)[1];
+						
+						if(fileName == $("#fileName").text())
+							showErr(lineNumber, errorText);
+					}
+				}
+			},
+			error : function(){
+				console.log("compilation error");
+			},
+			type : 'GET'
+		})
+	}
+}
+
+function showErr(line, error) {
 	
 	console.log("Found at: " + line)
 	
@@ -443,48 +460,19 @@ function showErr(line) {
 	
 	$("#line" + currentLine + " pre span").attr("id", "showError"+currentLine);
 	
-	$("#showError" + currentLine).notify( "Error!", {
-		position: "right"
+	$("#showError" + currentLine).notify(error, {
+		position: "right",
+		autoHideDelay: 150000,
+		clickToHide: false,
+		className: 'error',
 	});
+
+//	$("#line"+currentLine+ " .notifyjs-container").attr("onclick", "showTextErr(\"" + error + "\", " + currentLine + ");");
 }
 
-function checkErrors() { 
-	console.log("CheckErrors");
-	$.ajax({
-		url : 'compile',
-		success : function(response){
-			if(response.includes("error")) {	
-				var text = "";
-				$.each(JSON.parse(response), function(idx, obj) {
-					text = text + obj + "\n";
-				});
-				
-				var split = text.split("^");
-				var numErrors = split[split.length-1].match(/.*(\d+).*/)[1];
-				
-				console.log("Found " + numErrors + " errors");
-				$(".notifyjs-wrapper").remove();
-				
-				for(var i=0; i<numErrors; i++){
-					var regex = /.*\/(\w+)\.java:(\d+).*/;
-					var matches = split[i].match(regex);
-					var fileName = matches[1];
-					var lineNumber = matches[2];
-
-					if(fileName == $("#fileName").text())
-						showErr(lineNumber);
-				}
-				
-			}
-		},
-		error : function(){
-			console.log("compilation error");
-		},
-		type : 'GET'
-	})
+function showTextErr(error, currentLine) {console.log(error);
+	$("#line"+currentLine+ " pre div div div span").text(error);
 }
-
-
 
 
 

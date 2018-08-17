@@ -58,6 +58,8 @@
 
 <script src="../javascript/explorer.js"></script>
 <script src="../javascript/branching.js"></script>
+<script src="../javascript/treesidebar.js"></script>
+
 
 </body>
 </html>

@@ -51,7 +51,7 @@ function addCollaborator(projectId, creator, currUser) {
 			    					showCollaborator(creator,currUser);
 			    				},
 			    				error : function(){ 
-			    					alert("error");
+			    					console.log("add collaborator error");
 			    				},
 			    				type : 'POST'
 			    			});
@@ -103,7 +103,7 @@ function manageCollaborationRequest(){
 			}
 		},
 		error : function() { 
-			alert("manage error");
+			console.log("manage collaborator request error");
 		},
 		type : 'GET'
 	});

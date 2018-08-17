@@ -13,18 +13,21 @@
 </head>
 
 <body class="skin-red-light" onload="loadCollaboratorPage('${project.getCreator().getUsername()}','${user.getUsername()}')">   
-	<section class="box box-primary center">
+	<section class="box box-danger center">
 	<div class="nav-tabs-custom">
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#tab_1" data-toggle="tab"> Checkpoint 
 				<i class="fa fa-flag-checkered"></i>
 			</a></li>
-			<li onclick="findUsers();"><a href="#tab_2" data-toggle="tab"> Collaborator
+			<li onclick="findUsers();"><a href="#tab_2" data-toggle="tab"> Collaborators
 				<i class="fa fa-user"></i>
 			</a></li>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active" id="tab_1">
+			<div style="margin-bottom: 20px; margin-left: 5px;">
+				<h3 id="projectID">${project.getName()}</h3>
+			</div>
 				<a class="btn bg-blue" onclick="createCheckpoint();">Create Checkpoint</a> <br> <br>
 
 				<ul class="timeline">
@@ -64,10 +67,12 @@
 	</section>
 	<script>
 			$(document).ready(function() {
-				$('.sidebar-menu').tree();
+				$('#option_drop').hide();
+				initTreeSidebar();
 			});
 	</script>
 	<script src="../javascript/checkpoint.js"></script>
+	<script src="../javascript/treesidebar.js"></script>
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 </body>

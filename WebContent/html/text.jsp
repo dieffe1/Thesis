@@ -85,7 +85,7 @@
 	<script src="../plugins/codemirror/addon/scroll/simplescrollbars.js"></script>
 	<script src="../plugins/codemirror/mode/css.js"></script>
 	<script src="../javascript/text.js"></script>
-	<script src="../javascript/explorer.js"></script>
+	<script src="../javascript/treesidebar.js"></script>
 
 
 
