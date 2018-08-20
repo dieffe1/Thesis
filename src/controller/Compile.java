@@ -90,7 +90,7 @@ public class Compile extends HttpServlet {
 		
 		List<File> list = fileDao.findString(project.getId(), "public static void main(");
 		if(list.isEmpty()) {
-			resp.getWriter().println("Main class not found!");
+			resp.getWriter().println("Main method not found!");
 			return; 
 		}
 		File file = list.get(0);

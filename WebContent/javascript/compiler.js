@@ -14,8 +14,8 @@ function compile(){
 		success : function(response){
 			if(response == "ok")
 				swal("Compiled", "Successful compilation!", "success");
-			else if(response.includes("Main class not found!")) { 
-				swal("Error!", "Main class not found!", "error");
+			else if(response.includes("Main method not found!")) { 
+				swal("Error!", "Main method not found!", "error");
 			} else {	
 				var div = document.createElement("div");
 				var area = document.createElement("textarea");

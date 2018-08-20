@@ -68,14 +68,17 @@ public class ChangePage extends HttpServlet {
 					
 					break;
 				case 4:								// open file
+					File inUse = (File) session.getAttribute("file");
+					if(inUse != null)
+						fileDao.disableWrite(user.getUsername(), inUse.getId());
 					File file = fileDao.findByName(hash[0], hash[1], hash[2], hash[3]);
 					if(file.getUser() == null) {
 						file.setUser(user);
 						fileDao.enableWrite(user.getUsername(), file.getId());
-						resp.getWriter().print("write");
+						resp.getWriter().print("write!-" + user.getUsername()+"!-"+file.getName()+"!-"+file.getCode());
 					}
 					else 
-						resp.getWriter().print("read");
+						resp.getWriter().print("read!-" + file.getUser().getUsername()+"!-"+file.getName()+"!-"+file.getCode());
 
 					session.setAttribute("file", file);
 					break;
@@ -115,6 +118,11 @@ public class ChangePage extends HttpServlet {
 				break;
 			case "profile":
 				req.getRequestDispatcher("profile.jsp").forward(req, resp);
+				break;
+			case "closeFile":
+				File file = (File) session.getAttribute("file");
+				fileDao.disableWrite(user.getUsername(), file.getId());
+				session.setAttribute("firstLoad", false);
 				break;
 			case "logout":
 				session.invalidate();

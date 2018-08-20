@@ -20,7 +20,7 @@
 }
 
 h2{
-	margin-left: 20px;
+	margin-left: 0px;
 }
 
 #titles {
@@ -29,7 +29,7 @@ h2{
 
 #lock {
 	color: red;
-    margin-top: 2%;
+    margin-top: -1%;
     font-size: 19px;
 }
 

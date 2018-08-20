@@ -5,23 +5,27 @@ window.setInterval(function(){
 
 function loadCollaboratorPage(creator,currUser) {
     $('.js-example-basic-multiple').select2();
-    findUsers();    
+   	findUsers(creator,currUser);    
     showCollaborator(creator,currUser);
+    if(creator != currUser)
+    	$('#searchbar').remove();
 };
 
-function findUsers(){
-	$.ajax({
-		url: 'findUsers',
-		success: function(response){		
-			document.getElementById("selectUsers").innerHTML = "";
-			$.each(JSON.parse(response), function(idx, obj) {	
-				var option = document.createElement("OPTION");
-				option.text = obj;
-				document.getElementById("selectUsers").appendChild(option);
-			});
-		},
-		type : 'GET'
-	});
+function findUsers(creator,currUser){
+	if(creator == currUser){
+		 $.ajax({
+			 url: 'findUsers',
+			 success: function(response){		
+				 document.getElementById("selectUsers").innerHTML = "";
+				 $.each(JSON.parse(response), function(idx, obj) {	
+					 var option = document.createElement("OPTION");
+					 option.text = obj;
+					 document.getElementById("selectUsers").appendChild(option);
+				 });
+			 },
+			 type : 'GET'
+		 });
+	 }
 }
 
 function addCollaborator(projectId, creator, currUser) {
@@ -157,6 +161,10 @@ function showCollaborator(creator, currUser){
 				div4.append(image);
 				div2.append(div4);
 				div.append(div1.append(div2));
+				var D = $('<div></div>').attr("style", "margin-bottom: 20px; margin-left: 5px;");
+				var Cr = $('<h3></h3>').html("Creator: " + creator);
+				D.append(Cr);
+				$('#tab_2').prepend(D);
 				$('#collaborators').append(div);
 			});
 		},

@@ -390,7 +390,7 @@ function showContent(name, isCreator){
 					newDiv.append(buttonFolder);
 					
 					// Tree Sidebar
-					createTreeSidebar(location.hash, obj.name);
+					createTreeSidebar(location.hash, obj.name, false);
 					
 				});
 				section.append(newDiv);
@@ -439,7 +439,8 @@ function showContent(name, isCreator){
 				});
 			}
 			else if (hash.length == 4){ // file content
-				document.location.href = "page?action=openFile&mode="+response;
+				var mode = response.split("!-")[0];
+				document.location.href = "page?action=openFile&mode="+mode;
 			}
 		}
 	});

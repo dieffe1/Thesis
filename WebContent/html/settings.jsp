@@ -19,7 +19,7 @@
 			<li class="active"><a href="#tab_1" data-toggle="tab"> Checkpoint 
 				<i class="fa fa-flag-checkered"></i>
 			</a></li>
-			<li onclick="findUsers();"><a href="#tab_2" data-toggle="tab"> Collaborators
+			<li onclick="findUsers('${project.getCreator().getUsername()}','${user.getUsername()}');"><a href="#tab_2" data-toggle="tab"> Collaborators
 				<i class="fa fa-user"></i>
 			</a></li>
 		</ul>
@@ -53,7 +53,7 @@
 			</div>
 
 			<div class="tab-pane" id="tab_2">
-				<div class="form-group">
+				<div class="form-group" id="searchbar">
 					<c:if test="${user.getUsername() == project.getCreator().getUsername()}">
 						<label>Select Collaborator</label>
 						<select	class="js-example-basic-multiple" id="selectUsers" name="states[]" multiple style="width:100%"> </select> <br> <br>
@@ -73,6 +73,7 @@
 	</script>
 	<script src="../javascript/checkpoint.js"></script>
 	<script src="../javascript/treesidebar.js"></script>
+	<script src="../javascript/explorer.js"></script>
 	<script	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 </body>

@@ -15,7 +15,7 @@ function initTreeSidebar(){
 			$('#sidebarProjName').text(projectName);
 			
 			$.each(JSON.parse(response), function(idx, obj) {
-				createTreeSidebar(address, obj.name);
+				createTreeSidebar(address, obj.name, true);
 			});
 		}
 	});
@@ -23,10 +23,8 @@ function initTreeSidebar(){
 	
 }
 
-
-
-
-function createTreeSidebar(hash, packName) { console.log("inside " + packName + " " + hash)
+function createTreeSidebar(hash, packName, editorPage) { 
+	console.log("inside " + packName + " " + hash)
 	var packList = $('<li></li>').addClass("treeview");
 	var iconPack = $('<i></i>').addClass("fa fa-circle-o");
 	var packA = $('<a></a>');
@@ -57,8 +55,13 @@ function createTreeSidebar(hash, packName) { console.log("inside " + packName + 
 				fileA.append(iconFile);
 				fileA.append(obj.name);
 				fileA.attr("id", obj.name);
-				fileA.attr("onclick", "location.hash = \"" + newhash + "\"; " +
+				if(editorPage) {
+					fileA.attr("onclick", "openFile(\"" + newhash + "/" + 
+							obj.name + "\",true);")
+				} else {
+					fileA.attr("onclick", "location.hash = \"" + newhash + "\"; " +
 							"showContent(\"" + obj.name + "\" , false);"); // il parametro isCreator quando viene invocato showContent su un file è irrilevante
+				}
 				fileList.append(fileA);
 				packUl.append(fileList);
 			});
@@ -68,3 +71,55 @@ function createTreeSidebar(hash, packName) { console.log("inside " + packName + 
 	packList.append(packUl);
 	$('#sidebarPackagesZone').append(packList);
 }
+
+function openFile(hash, sidebar) {
+	$.ajax({
+		url : 'page',
+		data : {
+			action : "open",
+			hash: hash
+		},
+		type: 'GET',
+		success : function(response) {
+			//get response values
+			var values = response.split("!-");
+			var mode = values[0]; 
+			var userWriting = values[1];
+			var fileName = values[2];
+			var fileCode = values[3];
+			// add tab
+			if(sidebar) {
+				var numTabs = $('.nav-tabs').children().length;
+				$('li').removeClass("active");
+				var li = $('<li></li>').addClass("active");
+					li.attr("onclick", "openFile(\"" + hash + "\",false);");
+					li.attr("id", "tab-"+fileName+numTabs+1);
+				var a = $('<a></a>');
+				a.attr("data-toggle", "tab");
+				a.html(fileName);
+				li.append(a);
+				$('.nav-tabs').append(li);
+			}
+			//check new file lock
+			var currentMode = document.location.href.split("mode=");
+			if(currentMode[1] != mode)
+				document.location.href = currentMode[0] + "mode=" + mode;
+			//manage editor content
+			$('.tab-pane').removeAttr("id");
+			$('.tab-pane').attr("id", "tab_" + numTabs+1); 
+			$('#lock').html(userWriting + ' is editing this file!');
+			clearInterval(readIntervalID);
+			clearInterval(saveIntervalID);
+			$('#fileCode').html(fileCode);
+			$('#close').attr("onclick", "closeFile(\"#tab-" + fileName + numTabs+1 + "\");")
+			$('body').addClass("sidebar-collapse");
+			
+			initEditor();
+			readAndSaveCode(editor);
+		}
+	});
+}
+
+
+
+

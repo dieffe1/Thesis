@@ -621,6 +621,33 @@ public class FileDaoJDBC implements FileDao {
 			}
 		}
 	}
+	
+	@Override
+	public void disableWrite(String username, Long fileId) {
+		Connection connection = dataSource.getConnection();
+		try {
+			String update = "update file SET username = NULL WHERE username = ? and id = ?";
+			PreparedStatement statement = connection.prepareStatement(update);
+			statement.setString(1, username);
+			statement.setLong(2, fileId);
+			
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			if (connection != null) {
+				try {
+					connection.rollback();
+				} catch (SQLException excep) {
+					throw new PersistenceException(e.getMessage());
+				}
+			}
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				throw new PersistenceException(e.getMessage());
+			}
+		}
+	}
 
 	@Override
 	public void rename(String name, Long fileId) {

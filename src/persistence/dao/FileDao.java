@@ -37,6 +37,8 @@ public interface FileDao extends Dao{
 	
 	public void disableWrite(String username);
 	
+	public void disableWrite(String username, Long fileId);
+	
 	public void rename(String name, Long fileId);
 	
 	public void merge(Long packageid, Long masterid);

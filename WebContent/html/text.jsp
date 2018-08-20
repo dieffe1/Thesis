@@ -20,44 +20,53 @@
 </head>
 <body class="skin-red sidebar-collapse">
 	<div class="box box-danger center" id="mainarea">
-		<section class="content">
-		<div id="titles">
-			<h5 style="float: right" id="projectID">${project.getName()}</h5>
-			<h5 style="float: right">Project:</h5>
-			<h2 id="fileName">${file.getName()}</h2>
-			<h2 id="lock">${file.getUser().getUsername()} is editing this
-				file!</h2>
+		<div class="nav-tabs-custom">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#tab_1" data-toggle="tab"> ${file.getName()} 
+				</a></li>
+			</ul>
+	
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab_1">
+					<section class="content">
+					<div id="titles">
+						<h5 style="display: none" id="projectID">${project.getName()}</h5>
+						<h5 style="display: none">Project:</h5>
+						<h2 id="lock" style="display: none">${file.getUser().getUsername()} is editing this
+							file!</h2>
+					</div>
+					<div class="input-group-btn">
+						<button id="close" class="btn btn-danger"
+							data-toggle="tooltip" title="Close this tab">
+							<i class="fa fa-close"></i>
+						</button>
+						<button class="btn btn-default" onclick="findString();"
+							data-toggle="tooltip" title="Find String">
+							<i class="fa fa-search"></i>
+						</button>
+						<button class="btn btn-default" onclick="createCheckfile();"
+							data-toggle="tooltip" title="Create Checkpoint">
+							<i class="fa fa-flag-checkered"></i>
+						</button>
+						<button class="btn btn-default" onclick="consult();"
+							data-toggle="tooltip" title="Consult previous version">
+							<i class="fa fa-mail-reply"></i>
+						</button>
+						<button class="btn btn-default" onclick="renameFile();"
+							data-toggle="tooltip" title="Rename">
+							<i class="fa fa-pencil"></i>
+						</button>
+						<button class="btn btn-danger" onclick="removeFile();"
+							data-toggle="tooltip" title="Delete">
+							<i class="fa fa-trash"></i>
+						</button>
+					</div>
+					<article> <textarea class="codemirror-textarea"
+						name="preview-form-comment" id="fileCode">${file.getCode()}</textarea>
+					</article> </section>
+				</div>
+			</div>
 		</div>
-		<div class="input-group-btn">
-			<button id="close" class="btn btn-danger" onclick="closeFile();"
-				data-toggle="tooltip" title="Close Editor">
-				<i class="fa fa-close"></i>
-			</button>
-			<button class="btn btn-default" onclick="findString();"
-				data-toggle="tooltip" title="Find String">
-				<i class="fa fa-search"></i>
-			</button>
-			<button class="btn btn-default" onclick="createCheckfile();"
-				data-toggle="tooltip" title="Create Checkpoint">
-				<i class="fa fa-flag-checkered"></i>
-			</button>
-			<button class="btn btn-default" onclick="consult();"
-				data-toggle="tooltip" title="Consult previous version">
-				<i class="fa fa-mail-reply"></i>
-			</button>
-			<button class="btn btn-default" onclick="renameFile();"
-				data-toggle="tooltip" title="Rename">
-				<i class="fa fa-pencil"></i>
-			</button>
-			<button class="btn btn-danger" onclick="removeFile();"
-				data-toggle="tooltip" title="Delete">
-				<i class="fa fa-trash"></i>
-			</button>
-		</div>
-		<article> <textarea class="codemirror-textarea"
-			name="preview-form-comment" id="fileCode">${file.getCode()}</textarea>
-		</article> </section>
-
 	</div>
 	<div class="box box-danger center" id="contenuto">
 		<section class="content">

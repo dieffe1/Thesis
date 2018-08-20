@@ -17,25 +17,16 @@ $(document).ready(function() {
 	a2.attr("onclick", "execute();");
 	$("#lista_opzioni").append($("<li></li>").append(a2));
 
-	editor = CodeMirror.fromTextArea($('#fileCode')[0], {
-		mode : "text/x-java",
-		tabSize : 4,
-		indentWithTabs: true,
-		lineNumbers : true,
-		matchBrackets : true,
-		autoCloseBrackets: true,
-		autofocus: true,
-		scrollbarStyle: "overlay",
-		extraKeys : {
-			"Ctrl-Space" : "autocomplete"
-		},
-		
-	});
+	initEditor();
 	
-	if(mode == "read")
+	
+	if(mode == "read") 
 		editor.setOption("readOnly", true);
-	else
+	else 
 		$('#lock').hide();
+	
+	window.setInterval(checkMode, 2000, editor); 
+	
 	
 	editor2 = CodeMirror.fromTextArea($('#textarea2')[0], {
 		tabSize : 4,
@@ -45,7 +36,8 @@ $(document).ready(function() {
 	});
 
 	readAndSaveCode(editor);
-	checkErrorsIntervalID = window.setInterval(checkErrors, 5000, editor);
+	checkErrorsIntervalID = window.setInterval(checkErrors, 5000, editor); 
+
 });
 
 window.onload = function() {
@@ -59,14 +51,44 @@ window.onload = function() {
 	
 }
 
+function initEditor() {
+	editor = CodeMirror.fromTextArea($('#fileCode')[0], {
+		mode : "text/x-java",
+		tabSize : 4,
+		indentWithTabs: true,
+		lineNumbers : true,
+		matchBrackets : true,
+		autoCloseBrackets: true,
+		autofocus: true,
+		scrollbarStyle: "overlay",
+		extraKeys : {
+			"Ctrl-Space" : "autocomplete"
+		}
+	});
+}
+
+function checkMode(editor) {
+	var sp = document.location.href.split("&");
+	if(sp[1] != undefined)
+		var mode = sp[1].split("\=")[1];
+	
+	if(mode == "read") {
+		editor.setOption("readOnly", true);
+		$('#lock').show();
+	} else {
+		editor.setOption("readOnly", false);
+		$('#lock').hide();
+	}
+}
+
 function readAndSaveCode(editor) {
 	$.ajax({
 		url : 'readText',
 		success: function(response){
 			var string = response.substring(0,4);
-			if(string == "lock"){
+			if(string == "lock") {
 				editor.setOption("readOnly", true);
-				readIntervalID = window.setInterval(function(){
+				readIntervalID = window.setInterval(function() {
 					$.ajax({
 						url : 'readText',
 						success: function(responseText){
@@ -355,8 +377,23 @@ function nascondi() {
 	$('#contenuto').hide();
 }
 
-function closeFile() {
-	document.location.href="page?action=homepage";
+function closeFile(id) {
+	$.ajax({
+		url : 'page',
+		data : {
+			action : "closeFile"
+		},
+		success: function(response){ 
+			if($('.nav-tabs').children().length == 1){
+				document.location.href = "page?action=homepage";
+			} else {
+				$(id).remove();  console.log($('.nav-tabs').children()[1]);
+				$('.nav-tabs').children()[1].addClass("active");
+//				$('.nav-tabs').children()[1].click();
+			}
+		}
+	});
+	
 }
 
 function removeFile() {
