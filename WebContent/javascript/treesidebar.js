@@ -17,10 +17,15 @@ function initTreeSidebar(){
 			$.each(JSON.parse(response), function(idx, obj) {
 				createTreeSidebar(address, obj.name, true);
 			});
+			//creating first tab
+			var name = $('#firstFile').text().match(/(\S+)/)[1];
+			var pack = $('#fileCode').text().match(/.*\package\s(\w+)\.*/)[1];
+			var newhash = address + "/" + pack + "/" + name;
+			$('#firstFile').attr("onclick", "openFile(\"" + newhash + "\", false);");
 		}
 	});
 
-	
+
 }
 
 function createTreeSidebar(hash, packName, editorPage) { 
@@ -57,10 +62,11 @@ function createTreeSidebar(hash, packName, editorPage) {
 				fileA.attr("id", obj.name);
 				if(editorPage) {
 					fileA.attr("onclick", "openFile(\"" + newhash + "/" + 
-							obj.name + "\",true);")
+							obj.name + "\",true);");
 				} else {
 					fileA.attr("onclick", "location.hash = \"" + newhash + "\"; " +
-							"showContent(\"" + obj.name + "\" , false);"); // il parametro isCreator quando viene invocato showContent su un file è irrilevante
+							"showContent(\"" + obj.name + "\" , false);"); 
+					// il parametro isCreator quando viene invocato showContent su un file è irrilevante
 				}
 				fileList.append(fileA);
 				packUl.append(fileList);
@@ -111,9 +117,13 @@ function openFile(hash, sidebar) {
 			clearInterval(readIntervalID);
 			clearInterval(saveIntervalID);
 			$('#fileCode').html(fileCode);
-			$('#close').attr("onclick", "closeFile(\"#tab-" + fileName + numTabs+1 + "\");")
+			if(sidebar){
+				$('#close').attr("onclick", "closeFile(\"#tab-" + fileName + numTabs+1 + "\");")
+			} else {
+				$('#close').attr("onclick", "closeFile(\"#firstFile\");")
+			}
 			$('body').addClass("sidebar-collapse");
-			
+			$('.CodeMirror').remove();
 			initEditor();
 			readAndSaveCode(editor);
 		}

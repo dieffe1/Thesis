@@ -17,8 +17,9 @@ $(document).ready(function() {
 	a2.attr("onclick", "execute();");
 	$("#lista_opzioni").append($("<li></li>").append(a2));
 
-	initEditor();
+	$('#close').attr("onclick", "closeFile(\"#firstFile\");");
 	
+	initEditor();
 	
 	if(mode == "read") 
 		editor.setOption("readOnly", true);
@@ -387,9 +388,8 @@ function closeFile(id) {
 			if($('.nav-tabs').children().length == 1){
 				document.location.href = "page?action=homepage";
 			} else {
-				$(id).remove();  console.log($('.nav-tabs').children()[1]);
-				$('.nav-tabs').children()[1].addClass("active");
-//				$('.nav-tabs').children()[1].click();
+				$(id).remove();
+				$('.nav-tabs').children()[0].click();
 			}
 		}
 	});

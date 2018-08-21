@@ -22,7 +22,7 @@
 	<div class="box box-danger center" id="mainarea">
 		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="#tab_1" data-toggle="tab"> ${file.getName()} 
+				<li class="active" id="firstFile"><a href="#tab_1" data-toggle="tab"> ${file.getName()} 
 				</a></li>
 			</ul>
 	
