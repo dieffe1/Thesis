@@ -343,7 +343,7 @@ function showContent(name, isCreator){
 				$("#lista_opzioni").append($("<li></li>").append(a4));
 
 				var a5 = $("<a></a>").text("Compile");
-				a5.attr("onclick", "compile();");
+				a5.attr("onclick", "compile(\"false\");");
 				$("#lista_opzioni").append($("<li></li>").append(a5));
 
 				var a6 = $("<a></a>").text("Execute");

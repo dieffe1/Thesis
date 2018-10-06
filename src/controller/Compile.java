@@ -32,7 +32,7 @@ public class Compile extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException { 
-		System.out.println("########### Compiler");
+		System.out.println("\n\n########### Compiler");
 		HttpSession session = req.getSession();	 
 		Project project = (Project) session.getAttribute("project");
 		
@@ -97,6 +97,7 @@ public class Compile extends HttpServlet {
 		
 		String compile = "javac -sourcepath " + src.getAbsolutePath() + " -d " + bin.getAbsolutePath() + " " + path + file.getPackage().getName() + pathSeparator + file.getName() + ".java";
 		Process process = runtime.exec(compile); 
+		System.out.println("- -COMMAND: \n" + compile);
 
 		BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));	
 		List<String> errors = new LinkedList<>();

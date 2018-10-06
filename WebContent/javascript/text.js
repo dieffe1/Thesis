@@ -472,7 +472,7 @@ function checkErrors(editor) {
 						var lineNumber = matches[2];
 						
 						regex = /.*\s\error:\s(.*)/;
-						var errorText = split[i].match(regex)[1];
+						var errorText = split[i].match(regex)[1];		
 						
 						if(fileName == $("#fileName").text())
 							showErr(lineNumber, errorText);

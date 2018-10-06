@@ -417,4 +417,13 @@
 		<url-pattern>/html/upload</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>ManageVMServlet</servlet-name>
+		<servlet-class>controller.ManageVM</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ManageVMServlet</servlet-name>
+		<url-pattern>/html/manageVM</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

@@ -28,8 +28,8 @@
 	
 			<div class="tab-content">
 				<div class="tab-pane active" id="tab_1">
-					<section class="content">
-					<div id="titles">
+					<section class="content"> 
+					<div id="titles"> <h5 style="display: none" id="fileName"></h5>
 						<h5 style="display: none" id="projectID">${project.getName()}</h5>
 						<h5 style="display: none">Project:</h5>
 						<h2 id="lock" style="display: none">${file.getUser().getUsername()} is editing this

@@ -22,6 +22,7 @@ function initTreeSidebar(){
 			var pack = $('#fileCode').text().match(/.*\package\s(\w+)\.*/)[1];
 			var newhash = address + "/" + pack + "/" + name;
 			$('#firstFile').attr("onclick", "openFile(\"" + newhash + "\", false);");
+			$('#fileName').html(name);
 		}
 	});
 
@@ -116,6 +117,7 @@ function openFile(hash, sidebar) {
 			$('#lock').html(userWriting + ' is editing this file!');
 			clearInterval(readIntervalID);
 			clearInterval(saveIntervalID);
+			$('#fileName').html(fileName);
 			$('#fileCode').html(fileCode);
 			if(sidebar){
 				$('#close').attr("onclick", "closeFile(\"#tab-" + fileName + numTabs+1 + "\");")
