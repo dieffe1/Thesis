@@ -30,16 +30,20 @@ public class ReadText extends HttpServlet {
 		resp.setContentType("text/html; charset=UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 
-		if(file.getUser() == null || !file.getUser().getUsername().equals(user.getUsername()))
-		{
+		File currentFile = fileDao.findByPrimaryKey(file.getId());
+		User usingFile = currentFile.getUser();
+		if(usingFile == null) {
+			resp.getWriter().print("canLock" + currentFile.getCode());
+			return;
+			
+		} else if(!usingFile.getUsername().equals(user.getUsername()) && usingFile != null) {
 			if(fileDao.findByPrimaryKey(file.getId()).getPackage() == null) {
 				resp.getWriter().print("removed");
 				return;
 			}
 			
-			File file1 = fileDao.findByPrimaryKey(file.getId());
-			resp.getWriter().print("lock" + file1.getCode());
+			resp.getWriter().print("locked" + currentFile.getCode());
 			return;
-		}		
+		} 
 	}
 }

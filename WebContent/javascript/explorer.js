@@ -100,7 +100,7 @@ function removePackage() {
 			if(response == "online"){
 				swal("Cannot delete package", "Other users are working on it", "error");
 			} else {
-				swal("Removed", "Package removed successfully!", "success").then(() => {
+				swal("Deleted", "Package deleted successfully!", "success").then(() => {
 					$('#returnButton').click();
 				})
 			}
@@ -440,7 +440,7 @@ function showContent(name, isCreator){
 			}
 			else if (hash.length == 4){ // file content
 				var mode = response.split("!-")[0];
-				document.location.href = "page?action=openFile&mode="+mode;
+				document.location.href = "page?action=openFile#mode="+mode;
 			}
 		}
 	});
@@ -455,6 +455,7 @@ function back(isCreator){
 	location.hash = hash[0];
 	for(i = 1; i<hash.length-2; i++)
 		location.hash += "/"+hash[i];
+	$("#lista_opzioni").empty();
 	showContent(hash[hash.length-2], isCreator);
 }
 

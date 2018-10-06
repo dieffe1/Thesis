@@ -2,12 +2,10 @@ var readIntervalID;
 var saveIntervalID;
 var checkErrorsIntervalID;
 var loadChatIntervalID;
+var checkModeIntervalID;
 
 $(document).ready(function() { 
-	
-	var sp = document.location.href.split("&");
-	if(sp[1] != undefined)
-		var mode = sp[1].split("\=")[1];
+	var mode = location.hash.split("\=")[1];
 	
 	var a1 = $("<a></a>").text("Compile");
 	a1.attr("onclick", "compile();");
@@ -26,7 +24,7 @@ $(document).ready(function() {
 	else 
 		$('#lock').hide();
 	
-	window.setInterval(checkMode, 2000, editor); 
+	checkModeIntervalID = window.setInterval(checkMode, 500, editor); 
 	
 	
 	editor2 = CodeMirror.fromTextArea($('#textarea2')[0], {
@@ -37,7 +35,7 @@ $(document).ready(function() {
 	});
 
 	readAndSaveCode(editor);
-	checkErrorsIntervalID = window.setInterval(checkErrors, 5000, editor); 
+	checkErrorsIntervalID = window.setInterval(checkErrors, 2000, editor); 
 
 });
 
@@ -69,16 +67,14 @@ function initEditor() {
 }
 
 function checkMode(editor) {
-	var sp = document.location.href.split("&");
-	if(sp[1] != undefined)
-		var mode = sp[1].split("\=")[1];
+	var mode = location.hash.split("\=")[1];
 	
 	if(mode == "read") {
-		editor.setOption("readOnly", true);
 		$('#lock').show();
+		editor.setOption("readOnly", true);
 	} else {
-		editor.setOption("readOnly", false);
 		$('#lock').hide();
+		editor.setOption("readOnly", false);
 	}
 }
 
@@ -86,27 +82,32 @@ function readAndSaveCode(editor) {
 	$.ajax({
 		url : 'readText',
 		success: function(response){
-			var string = response.substring(0,4);
-			if(string == "lock") {
+			var string = response.substring(0,6);
+			if(string == "locked") {
 				editor.setOption("readOnly", true);
 				readIntervalID = window.setInterval(function() {
 					$.ajax({
 						url : 'readText',
-						success: function(responseText){
+						success: function(responseText){ 
 							if(responseText == "removed") {
 								swal("Warning", "File was deleted!", "warning").then(() => {
 									document.location.href = "page?action=homepage";								
 								})
-							}
-							else
-								editor.setValue(responseText.substring(4));
+							} else if(responseText.substring(0,7) == "canLock") {
+								location.hash = "mode=write";
+								editor.setValue(responseText.substring(7));
+								clearInterval(readIntervalID);
+								clearInterval(saveIntervalID);
+								readAndSaveCode(editor);
+							} else
+								editor.setValue(responseText.substring(6));
 						},
 						type : 'GET'
 					});
-				}, 1000);	
+				}, 500);	
 
-			}
-			else {
+			} else if(string != "locked" && string != "canLock"){		
+				editor.setOption("readOnly", false);
 				saveIntervalID = window.setInterval(function(){
 					$.ajax({
 						url : 'saveText',
@@ -115,7 +116,7 @@ function readAndSaveCode(editor) {
 						},
 						type : 'POST'
 					});
-				}, 1000);
+				}, 500);
 			}
 		},
 		type : 'GET'
@@ -401,12 +402,12 @@ function removeFile() {
 		url : 'removeFile',
 		success: function(response){
 			if(response == "yes") {
-				swal("Removed", "File removed successfully!", "success").then(() => {
+				swal("Deleted", "File deleted successfully!", "success").then(() => {
 					document.location.href = "page?action=homepage";								
 				})
 			}
 			else if(response == "no") {
-				swal("Error", "Impossible to remove file, edit in progress!","error");
+				swal("Error", "Impossible to delete file, edit in progress!","error");
 			}
 		},
 		type : 'POST'
@@ -446,7 +447,7 @@ function renameFile() {
 
 var previousCode = "";
 
-function checkErrors(editor) { 
+function checkErrors(editor) {
 	if(previousCode !== editor.getValue()) {
 		console.log("CheckErrors");		
 		previousCode = editor.getValue();
@@ -507,7 +508,8 @@ function showErr(line, error) {
 //	$("#line"+currentLine+ " .notifyjs-container").attr("onclick", "showTextErr(\"" + error + "\", " + currentLine + ");");
 }
 
-function showTextErr(error, currentLine) {console.log(error);
+function showTextErr(error, currentLine) {
+	console.log(error);
 	$("#line"+currentLine+ " pre div div div span").text(error);
 }
 

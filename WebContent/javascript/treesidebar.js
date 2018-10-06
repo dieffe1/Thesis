@@ -99,7 +99,7 @@ function openFile(hash, sidebar) {
 				var numTabs = $('.nav-tabs').children().length;
 				$('li').removeClass("active");
 				var li = $('<li></li>').addClass("active");
-					li.attr("onclick", "openFile(\"" + hash + "\",false);");
+					li.attr("onclick", "openFile(\"" + hash + "\",false); $('#lock').hide();");
 					li.attr("id", "tab-"+fileName+numTabs+1);
 				var a = $('<a></a>');
 				a.attr("data-toggle", "tab");
@@ -108,9 +108,9 @@ function openFile(hash, sidebar) {
 				$('.nav-tabs').append(li);
 			}
 			//check new file lock
-			var currentMode = document.location.href.split("mode=");
+			var currentMode = location.hash.split("mode=");
 			if(currentMode[1] != mode)
-				document.location.href = currentMode[0] + "mode=" + mode;
+				location.hash = "mode=" + mode;
 			//manage editor content
 			$('.tab-pane').removeAttr("id");
 			$('.tab-pane').attr("id", "tab_" + numTabs+1); 
@@ -126,8 +126,15 @@ function openFile(hash, sidebar) {
 			}
 			$('body').addClass("sidebar-collapse");
 			$('.CodeMirror').remove();
+			
+			//reinitialize everything
 			initEditor();
 			readAndSaveCode(editor);
+			clearInterval(checkErrorsIntervalID);
+			checkErrorsIntervalID = window.setInterval(checkErrors, 2000, editor); 
+			clearInterval(checkModeIntervalID);
+			checkModeIntervalID = window.setInterval(checkMode, 500, editor); 
+			
 		}
 	});
 }

@@ -68,6 +68,8 @@ public class ChangePage extends HttpServlet {
 					
 					break;
 				case 4:								// open file
+					// se l'utente che vuole aprire un nuovo file ne sta già visualizzando un altro, 
+					// lascia il "lock" sul file vecchio e lo prende, se possibile, su quello nuovo
 					File inUse = (File) session.getAttribute("file");
 					if(inUse != null)
 						fileDao.disableWrite(user.getUsername(), inUse.getId());
@@ -122,7 +124,9 @@ public class ChangePage extends HttpServlet {
 			case "closeFile":
 				File file = (File) session.getAttribute("file");
 				fileDao.disableWrite(user.getUsername(), file.getId());
+				file.setUser(null);
 				session.setAttribute("firstLoad", false);
+				session.setAttribute("file", file);
 				break;
 			case "logout":
 				session.invalidate();
