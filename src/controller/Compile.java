@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -32,7 +34,7 @@ public class Compile extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException { 
-		System.out.println("\n\n########### Compiler");
+		System.out.println("\n\n########### Compiler\n");
 		HttpSession session = req.getSession();	 
 		Project project = (Project) session.getAttribute("project");
 		
@@ -66,6 +68,32 @@ public class Compile extends HttpServlet {
 
 		System.out.println("bin path: " + bin.getAbsolutePath());
 
+		Boolean autocomplete = Boolean.parseBoolean(req.getParameter("autocomplete"));
+		String preventErrorCode = "";
+		String nameAutoCompleteFile = "";
+		if(autocomplete) {
+			int line = Integer.parseInt(req.getParameter("line"));
+			int begin = Integer.parseInt(req.getParameter("begin"));
+			int end = Integer.parseInt(req.getParameter("end"));
+			File inUse = (File) session.getAttribute("file");
+			String[] lines = inUse.getCode().split(System.getProperty("line.separator"));
+			String variableLine = lines[line];
+			char[] toArray = variableLine.toCharArray();
+			for(int i=begin; i<end && i < toArray.length; i++) {
+				toArray[i] = ' ';
+			}
+			StringBuilder builder = new StringBuilder();
+			for(int i=0; i<lines.length; i++) {
+				if(i == line)
+					builder.append(toArray);
+				else
+					builder.append(lines[i]);
+			}
+			preventErrorCode = builder.toString();
+			nameAutoCompleteFile = inUse.getName();
+		}
+		
+		
 		for (Package pack : packages.values()) {
 			String srcPackage = src.getAbsolutePath() + pathSeparator + pack.getName();
 			java.io.File dir = new java.io.File(srcPackage);
@@ -80,7 +108,11 @@ public class Compile extends HttpServlet {
 				filepaths.add(f.getAbsolutePath());
 
 				PrintWriter out = new PrintWriter(f);
-				out.println(file.getCode());
+				if(file.getName().equals(nameAutoCompleteFile)) {
+					out.println(preventErrorCode);
+				} else {
+					out.println(file.getCode());
+				}
 				out.flush();
 				out.close();
 			}
@@ -93,11 +125,11 @@ public class Compile extends HttpServlet {
 			resp.getWriter().println("Main method not found!");
 			return; 
 		}
-		File file = list.get(0);
+		File mainMethod = list.get(0);
 		
-		String compile = "javac -sourcepath " + src.getAbsolutePath() + " -d " + bin.getAbsolutePath() + " " + path + file.getPackage().getName() + pathSeparator + file.getName() + ".java";
+		String compile = "javac -sourcepath " + src.getAbsolutePath() + " -d " + bin.getAbsolutePath() + " " + path + mainMethod.getPackage().getName() + pathSeparator + mainMethod.getName() + ".java";
 		Process process = runtime.exec(compile); 
-		System.out.println("- -COMMAND: \n" + compile);
+		System.out.println("\n- -COMPILING PROJECT \n");
 
 		BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));	
 		List<String> errors = new LinkedList<>();

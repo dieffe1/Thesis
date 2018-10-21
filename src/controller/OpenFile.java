@@ -24,6 +24,7 @@ public class OpenFile extends HttpServlet{
 		 * 
 		 */
 		
+		System.out.println("ELIMINARE ??");
 		
 		HttpSession session = req.getSession();
 		User user = (User) session.getAttribute("user");

@@ -32,6 +32,7 @@ public class Execute extends HttpServlet {
 
 		// Creo la cartella dove verranno memorizzati i .java e .class nella home dell'utente
 		Runtime.getRuntime().exec("mkdir InstanText");
+		Runtime.getRuntime().exec("rm -r InstanText/" + project.getName());
 		Runtime.getRuntime().exec("mv " + path + " InstanText");
 		BufferedReader readUser = new BufferedReader(new InputStreamReader(Runtime.getRuntime().exec("whoami").getInputStream()));
 		String user = readUser.readLine();
@@ -98,21 +99,5 @@ public class Execute extends HttpServlet {
 				return true;
 		return false;
 	}
-	
-	public void waitVMStarting(Thread t) {
-		System.out.print("0%...");
-		int time = 0;
-		while(time < 10) {
-			try {
-				time++;
-				System.out.print(time*10 + "%...");
-				t.sleep(6000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		System.out.println();
-	}
-	
 	
 }

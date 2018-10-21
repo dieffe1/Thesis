@@ -3,11 +3,12 @@ package controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -24,8 +25,8 @@ import model.File;
 import model.Package;
 import model.Project;
 import model.User;
-import persistence.PersistenceException;
 import persistence.DAOFactory;
+import persistence.PersistenceException;
 import persistence.dao.CheckpointDao;
 import persistence.dao.Checkpoint_FileDao;
 import persistence.dao.FileDao;
@@ -80,6 +81,10 @@ public class UploadProject extends HttpServlet {
 			InputStream fileContent = filePart.getInputStream();
 			Scanner s = new Scanner(fileContent, "UTF-8").useDelimiter("\\A");
 			String code = s.hasNext() ? s.next().toString() : "";
+			Pattern p = Pattern.compile("package\\s+\\w+;");
+			Matcher m = p.matcher(code);
+			if(!m.find())
+				code = "package " + packName + ";\n" + code;
 			
 			try {
 				File file = new File(name, pack, code);
