@@ -11,6 +11,9 @@ function InitGoogleCustomSearchEngine(){
 function compile(compileAndRun){
 	$.ajax({
 		url : 'compile',
+		data : {
+			autocomplete : "false"
+		},
 		success : function(response){
 			if(response == "ok")
 				swal("Compiled", "Successful compilation!", "success").then(function(){
@@ -101,7 +104,8 @@ function execute(){
 						},
 						error : function(){
 							alert("manage virtual machine error");
-						}
+						},
+						type : 'GET'
 					})
 				});
 			}

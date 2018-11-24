@@ -33,10 +33,77 @@ $(document).ready(function() {
 		mode : "text/x-java",
 		readOnly: 'nocursor'
 	});
+	
+	//autocompletamento
+	$(document).keypress(function(e){
+		// 46 == punto
+		if(e.keyCode == '46') {
+			var A1 = editor.getCursor().line;
+		    var A2 = editor.getCursor().ch;
+		    
+		    //verifico che non venga premuto il punto in mezzo ad una parola (par.ola)
+		    var afterDot = editor.getLine(A1)[A2];
+		    if(afterDot == "" || afterDot == " " || afterDot == undefined) {
+		    	// il -1 perché gli indici di posizione vengono presi prima dell'inserimento del punto
+		    	var B1 = editor.findWordAt({line: A1, ch: A2-1}).anchor.ch;
+		    	var B2 = editor.findWordAt({line: A1, ch: A2-1}).head.ch;
+		    	
+		    	var object = editor.getRange({line: A1,ch: B1}, {line: A1,ch: B2});
+		    	
+		    	var line = A1, begin = B1, end = B2;
+		    	
+		    	//verifico che ciò che è stato catturato possa essere effettivamente il nome di una variabile [aA0 - zZ9]
+		    	if(object.match(/\w+/) != null){
+		    		console.log("autoComplete -> " + object);
+		    		$.ajax({
+		    			url : 'compile',
+		    			type : 'GET',
+		    			data : {
+		    				autocomplete : "true",
+		    				line : line,
+		    				begin : begin,
+		    				end : end
+		    			},
+		    			success : function() {
+		    				$.ajax({
+								url : 'autocomplete',
+								data : {
+									obj : object
+								},
+								success : function(response) {
+									 CodeMirror.registerHelper("hint", "myHint", function(editor, options) {
+							                var cur = editor.getCursor(), token = editor.getTokenAt(cur);
+							                var start = token.start+1, end = token.end;
+							                var list = [];
+							                $.each(JSON.parse(response), function(idx, obj) {
+							                	list.push(obj);
+							                });
+							                return {
+							                    list: list,
+							                    from: CodeMirror.Pos(cur.line, start),
+							                    to: CodeMirror.Pos(cur.line, end)
+							                }
+							            }); 
+									 CodeMirror.showHint(editor, CodeMirror.hint.myHint);
+								}, 
+								error : function(){
+									alert("autoCompl");
+								},
+								type : 'GET'
+							})
+						},
+		    		});
+		    		
+		    	}
+		    		
+		    	
+		    }
+		    
+		}
+	})
 
 	readAndSaveCode(editor);
 	checkErrorsIntervalID = window.setInterval(checkErrors, 2000, editor); 
-
 });
 
 window.onload = function() {
@@ -453,6 +520,9 @@ function checkErrors(editor) {
 		previousCode = editor.getValue();
 		$.ajax({
 			url : 'compile',
+			data : {
+				autocomplete : "false"
+			},
 			success : function(response){
 				if(response.includes("error")) {	
 					var text = "";
@@ -516,7 +586,26 @@ function showTextErr(error, currentLine) {
 
 
 
-
+jQuery.fn.tablerize = function(style) {
+    return this.each(function() {
+            var table = $('<table>');
+            table.addClass("CodeMirror-hints");
+            table.attr("style", style);
+            var tbody = $('<tbody>');
+            $(this).find('li').each(function(i) {
+                   var values = $(this).html().split('*');
+                   var tr = $('<tr>');
+                   tr.addClass("CodeMirror-hint");
+                   $.each(values, function(y) {
+                	       split = values[y].split(" return ");
+                           tr.append($('<td>').html(split[0]));
+                           tr.append($('<td>').html("return " + split[1]));
+                   });
+                   tbody.append(tr);
+            });
+            $(this).after(table.append(tbody)).remove();
+    });
+};
 
 
 

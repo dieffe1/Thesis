@@ -417,6 +417,7 @@
 		<url-pattern>/html/upload</url-pattern>
 	</servlet-mapping>
 	
+	
 	<servlet>
 		<servlet-name>ManageVMServlet</servlet-name>
 		<servlet-class>controller.ManageVM</servlet-class>
@@ -426,4 +427,14 @@
 		<url-pattern>/html/manageVM</url-pattern>
 	</servlet-mapping>
 	
+	
+	
+	<servlet>
+		<servlet-name>AutoCompleteServlet</servlet-name>
+		<servlet-class>controller.AutoComplete</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AutoCompleteServlet</servlet-name>
+		<url-pattern>/html/autocomplete</url-pattern>
+	</servlet-mapping>
 </web-app>
